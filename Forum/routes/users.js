@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var UserModel = require('../models/UserModel.js');
 
 router.get('/', function (req, res, next) {
+  //passport.authenticate('basic', { session: false });
   UserModel.find(function (err, docs) {
   	if (err) return next(err);
     console.log(docs);
@@ -34,7 +35,8 @@ router.post('/', function (req, res, next) {
 	});
   newUser.save(function(err, doc) {
   	if (err) return next(err);
-    res.json(doc);
+    res.statusCode = 200;
+    res.send();
   });
 });
 
@@ -50,7 +52,8 @@ router.put('/:userId', function (req, res, next) {
 	 }, 
   	function(err, doc){
   		if (err) return next(err);
-    	res.json(doc);
+    	res.statusCode = 200;
+      res.send();
   	}
   );
 });
@@ -60,7 +63,8 @@ router.delete('/:userId', function (req, res, next) {
   UserModel.findByIdAndRemove(userId, function(err, doc) {
     if (err) throw err;
     console.log('User deleted!');
-    res.json(doc);
+    res.statusCode = 200;
+    res.send();
   });
 });
 
