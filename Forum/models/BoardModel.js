@@ -6,6 +6,7 @@ var ObjectId = mongoose.Types.ObjectId;
 var BoardModel = new mongoose.Schema({
   _id: {type:ObjectIdSchema, default: function () { return new ObjectId()} },
   title: String,
+  user: {type: ObjectIdSchema, ref: 'Post'},
   posts: [{type: ObjectIdSchema, ref: 'Post'}],
   isPublic: Boolean,
   allowedPosts: Number,
