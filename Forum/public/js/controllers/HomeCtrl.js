@@ -5,8 +5,7 @@ angular.module('HomeCtrl', []).controller('HomeController', function($location, 
 
 	$scope.loginUser = function() {
 	  console.log($scope.loginDetail);
-	  
-      if($scope.loginDetail==undefined || $scope.loginDetail.username==undefined || $scope.loginDetail.password==undefined){
+	  if($scope.loginDetail==undefined || $scope.loginDetail.username==undefined || $scope.loginDetail.password==undefined){
       	$scope.errorMessage="invalid input";
       	$scope.hasError=true;
       }else if($scope.loginDetail.username=='admin' && $scope.loginDetail.password=='admin'){
