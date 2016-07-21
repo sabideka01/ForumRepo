@@ -1,0 +1,36 @@
+<div class="jumbotron text-center">
+	<h1>User Management</h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>         
+          <th>Email</th>
+          <th>Username</th>
+          <th>Password</th>
+          <th>Action</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input class="form-control" ng-model="user.name"></td>
+          <td><input class="form-control" ng-model="user.email"></td>
+          <td><input class="form-control" ng-model="user.username"></td>
+           <td><input class="form-control" ng-model="user.password"></td>
+          <td><button class="btn btn-primary" ng-click="addUser()">Add User</button></td>
+          <td><button class="btn btn-info" ng-click="update()">Update</button></td>
+          <td><button class="btn btn-info" ng-click="deselect()">Clear</button></td>
+        </tr>
+        <tr ng-repeat="user in userlist">
+          <td>{{user.name}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.username}}</td>
+          <td>{{user.password}}</td>
+         
+          <td><button class="btn btn-danger" ng-click="remove(user._id)">Remove</button></td>
+          <td><button class="btn btn-warning" ng-click="edit(user._id)">Edit</button></td>
+        </tr>
+      </tbody>
+    </table>
+</div>

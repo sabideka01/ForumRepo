@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-
+var passport = require('passport');
 var mongoose = require('mongoose');
 var UserModel = require('../models/UserModel.js');
 
 router.get('/', function (req, res, next) {
-  //passport.authenticate('basic', { session: false });
+  passport.authenticate('basic', { session: false });
   UserModel.find(function (err, docs) {
   	if (err) return next(err);
     console.log(docs);
