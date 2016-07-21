@@ -1,34 +1,46 @@
-var passport = require('passport');
-var expressSession = require('express-session');
+var express = require('express');
+var router = express.Router();
 var UserModel = require('../models/UserModel.js');
 
-passport.use('login', new LocalStrategy({
-    passReqToCallback : true
-  },
-  function(req, username, password, done) { 
-    UserModel.findOne({ 'username' :  username }, 
-      function(err, user) {
-        if (err)
-          return done(err);
-        if (!user){
-          console.log('User Not Found with username '+username);
-          return done(null, false, 
-                req.flash('message', 'User Not found.'));                 
-        }
-        if (!isValidPassword(user, password)){
-          console.log('Invalid Password');
-          return done(null, false, 
-              req.flash('message', 'Invalid Password'));
-        }
-        return done(null, user);
-      }
-    );
-}));
+router.post('/', function (req, res, next) {
+  var username= req.body.username;
+  var password= req.body.password;
+  UserModel.findOne({'username':username}, function(err, user) {
+    if (err) return next(err);
+    if(!user || user.password!=password) {
+       res.statusCode = 403;
+       res.send();
+    }
+    res.statusCode = 200;
+    res.send();
+  });
+});
 
-var isValidPassword = function(user, password){
-  return bCrypt.compareSync(password, user.password);
-}
 
-var isValidPassword = function(user, password){
-  return bCrypt.compareSync(password, user.password);
-}
+module.exports = router;
+
+/*
+var passport = require('passport');
+var expressSession = require('express-session');
+app.post('/login', function handleLocalAuthentication(req, res, next) {
+
+    passport.authenticate('local', function(err, user, info) {
+        if (err) return next(err);
+        if (!user) {
+            return res.json(403, {
+                message: "no user found"
+            });
+        }
+
+        // Manually establish the session...
+        req.login(user, function(err) {
+            if (err) return next(err);
+            return res.json({
+                message: 'user authenticated',
+            });
+        });
+
+    })(req, res, next);
+};
+*/
+
