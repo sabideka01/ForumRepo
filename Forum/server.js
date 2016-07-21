@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
 var mongoose = require('mongoose');
-var UserModel = require('./models/UserModel.js');
+var UserModel = require('./app/models/UserModel.js');
 
 mongoose.connect(dbConfig.url, function(err) {
     if(err) {
@@ -25,9 +25,9 @@ mongoose.connect(dbConfig.url, function(err) {
     }
 });
 
-var users = require('./routes/users');
-var boards = require('./routes/boards');
-var posts = require('./routes/posts');
+var users = require('./app/routes/users');
+var boards = require('./app/routes/boards');
+var posts = require('./app/routes/posts');
 
 app.use('/users', users);
 app.use('/boards', boards);

@@ -13,8 +13,13 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
             controller: 'UserController'
         })
 
-         .when('/boardPage', {
-            templateUrl: 'views/board.html',
+        .when('/boardAdminPage', {
+            templateUrl: 'views/boardAdmin.html',
+            controller: 'BoardController'
+        })
+
+        .when('/boardUserPage', {
+            templateUrl: 'views/boardUser.html',
             controller: 'BoardController'
         })
 
