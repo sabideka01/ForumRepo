@@ -1,4 +1,4 @@
-angular.module('HomeCtrl', []).controller('HomeController', function($location, $scope) {
+angular.module('HomeCtrl', []).controller('HomeController', function($location, $scope,$http) {
 
 	$scope.hasError=false;
 	$scope.errorMessage="";
