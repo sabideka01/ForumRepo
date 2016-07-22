@@ -5,14 +5,25 @@ var mongoose = require('mongoose');
 var BoardModel = require('../models/BoardModel.js');
 var UserModel = require('../models/UserModel.js');
 
-router.get('/', function(req, res, next) {
-  BoardModel.find(function (err, boards) {
+router.get('/list/:userId', function(req, res, next) {
+  var userId = req.params.userId;
+  BoardModel.find({'user':userId},function (err, boards) {
+    console.log('getting boards-'+boards);
+    if (err) return next(err);
+    res.json(boards);
+  });
+});
+
+router.get('/list', function(req, res, next) {
+  BoardModel.find({'isPublic':true},function (err, boards) {
+    console.log('getting boards-'+boards);
     if (err) return next(err);
     res.json(boards);
   });
 });
 
 router.get('/:boardId', function(req, res, next) {
+  console.log(req);
   var boardId = req.params.boardId;
   BoardModel.findById(boardId, function (err, board) {
     if (err) return next(err);
@@ -25,6 +36,7 @@ router.get('/:boardId', function(req, res, next) {
 });
 
 router.post('/:userId', function(req, res, next) {
+  if(req.body.isPublic==undefined) req.body.isPublic = false;
   var userId = req.params.userId;
   UserModel.findOne(userId, function (err, user) {
   	if (err) return next(err);
@@ -50,6 +62,7 @@ router.post('/:userId', function(req, res, next) {
 });
 
 router.put('/:boardId', function (req, res, next) {
+  if(req.body.isPublic==undefined) req.body.isPublic = false;
   var boardId = req.params.boardId;
   BoardModel.findByIdAndUpdate(boardId, 
   	{ 

@@ -18,11 +18,9 @@
     <!-- ANGULAR CUSTOM -->
     <script src="js/controllers/HomeCtrl.js"></script>
     <script src="js/controllers/UserCtrl.js"></script>
-    <script src="js/services/UserService.js"></script>
     <script src="js/controllers/BoardCtrl.js"></script>
-    <script src="js/services/BoardService.js"></script>
+    <script src="js/controllers/PublicBoardCtrl.js"></script>
     <script src="js/controllers/PostCtrl.js"></script>
-    <script src="js/services/PostService.js"></script>
     <script src="js/appRoutes.js"></script>
     <script src="js/app.js"></script>
 </head>
@@ -32,13 +30,12 @@
     <!-- HEADER -->
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">Home</a>
+            <a ng-show="isLoggedIn" class="navbar-brand">Welcome {{loggedUser.name}}</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="/userPage">Users</a></li>
-            <li><a href="/boardAdminPage">BoardAdmin</a></li>
-            <li><a href="/boardUserPage">BoardUser</a></li>
-            <li><a href="/postPage">Posts</a></li>
+            <li><a ng-show="isLoggedIn" href="/boardUserPage">Manage your Boards</a></li>
+            <li ng-show="isLoggedIn"><a ng-click="publicBoardPage()">Public Boards</a></li>
+            <li ng-show="isLoggedIn"><a href="/" ng-click="logoutUser()">Logout</a></li>
         </ul>
     </nav>
 

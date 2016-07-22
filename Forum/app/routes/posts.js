@@ -6,8 +6,9 @@ var mongoose = require('mongoose');
 var PostModel = require('../models/PostModel.js');
 var BoardModel = require('../models/BoardModel.js');
 
-router.get('/', function(req, res, next) {
-  PostModel.find(function (err, posts) {
+router.get('/list/:boardId', function(req, res, next) {
+  var boardId = req.params.boardId;
+  PostModel.find({'board':boardId},function (err, posts) {
     if (err) return next(err);
     res.json(posts);
   });
@@ -27,7 +28,7 @@ router.get('/:postId', function(req, res, next) {
 
 router.post('/:boardId', function(req, res, next) {
   var boardId = req.params.boardId;
-  BoardModel.findOne(boardId, function (err, board) {
+  BoardModel.findById(boardId, function (err, board) {
   	if (err) return next(err);
     if(board==undefined || board==null) {
     	res.json({"error":"could not find board"});

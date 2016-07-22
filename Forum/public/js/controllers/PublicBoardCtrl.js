@@ -1,12 +1,12 @@
-angular.module('sampleApp.BoardCtrl', []).controller('BoardController', function($location,$scope, $http, $rootScope) {
+angular.module('sampleApp.PublicBoardCtrl', []).controller('PublicBoardController', function($location,$scope, $http, $rootScope) {
 
 $scope.boardPosts = function(detail){
   $rootScope.selectedBoard = detail;
-  $location.path('/postPage');
+  $location.path('/publicPostPage');
 }
-	
+
 var refresh = function() {
-  $http.get('/boards/list/'+ $rootScope.loggedUser._id).success(function(response) {
+  $http.get('/boards/list').success(function(response) {
     console.log("I got the data I requested");
     $scope.boardlist = response;
     $scope.board = "";

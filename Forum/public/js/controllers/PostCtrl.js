@@ -1,25 +1,11 @@
-angular.module('PostCtrl', []).controller('PostController', function($scope) {
+angular.module('sampleApp.PostCtrl', []).controller('PostController', function($rootScope, $scope, $http) {
 
-	/*$scope.posts = [];
-    $scope.addItem = function () {
-        $scope.errortext = "";
-        if (!$scope.addMe) {return;}
-        if ($scope.posts.indexOf($scope.addMe) == -1) {
-            $scope.posts.push($scope.addMe);
-        } else {
-            $scope.errortext = "Post already added!!";
-        }
-    }
-    $scope.removeItem = function (x) {
-        $scope.errortext = "";
-        $scope.posts.splice(x, 1);
-    }*/
 
 var refresh = function() {
-  $http.get('/boards').success(function(response) {
+  $http.get('/posts/list/'+$rootScope.selectedBoard._id).success(function(response) {
     console.log("I got the data I requested");
-    $scope.boardlist = response;
-    $scope.board = "";
+    $scope.postList = response;
+    $scope.post = "";
   });
 };
 
@@ -27,7 +13,7 @@ refresh();
 
 $scope.addPost = function() {
   console.log($scope.post);
-  $http.post('/posts', $scope.post).success(function(response) {
+  $http.post('/posts/'+ $rootScope.selectedBoard._id, $scope.post).success(function(response) {
     console.log(response);
     refresh();
   });

@@ -23,7 +23,7 @@
           <td><button class="btn btn-info" ng-click="deselect()">Clear</button></td>
         </tr>
         <tr ng-repeat="user in userlist">
-          <td>{{user.name}}</td>
+          <td><a ng-click="userBoards(user)">{{user.name}}</a></td>
           <td>{{user.email}}</td>
           <td>{{user.username}}</td>
           <td>{{user.password}}</td>

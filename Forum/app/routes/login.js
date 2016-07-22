@@ -12,7 +12,7 @@ router.post('/', function (req, res, next) {
        res.send();
     }
     res.statusCode = 200;
-    res.send();
+    res.json(user);
   });
 });
 

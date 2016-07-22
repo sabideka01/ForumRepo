@@ -1,0 +1,17 @@
+<div class="jumbotron text-center">
+	<h1>Board</h1>
+	<table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="board in boardlist">
+              <td><a ng-click="boardPosts(board)">{{board.title}}</a></td>
+              <td><button class="btn btn-warning" ng-click="boardPosts(board)">Posts</button></td>
+            </tr>
+          </tbody>
+        </table>
+</div>

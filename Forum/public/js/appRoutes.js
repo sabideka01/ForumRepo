@@ -1,4 +1,4 @@
-angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+angular.module('sampleApp.appRoutes', []).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
     $routeProvider
 
@@ -23,10 +23,22 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
             controller: 'BoardController'
         })
 
+        .when('/publicBoardPage', {
+            templateUrl: 'views/publicBoard.html',
+            controller: 'PublicBoardController'
+        })
+
         .when('/postPage', {
             templateUrl: 'views/post.html',
             controller: 'PostController'    
+        })
+
+        .when('/publicPostPage', {
+            templateUrl: 'views/publicPost.html',
+            controller: 'PostController'
         });
+
+
 
     $locationProvider.html5Mode(true);
 

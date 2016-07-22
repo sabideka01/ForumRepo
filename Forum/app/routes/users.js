@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var UserModel = require('../models/UserModel.js');
 
-router.get('/', function (req, res, next) {
+router.get('/list', function (req, res, next) {
   UserModel.find(function (err, docs) {
   	if (err) return next(err);
     console.log(docs);

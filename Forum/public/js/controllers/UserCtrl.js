@@ -1,8 +1,13 @@
-angular.module('UserCtrl', []).controller('UserController', function($scope, $http) {
+angular.module('sampleApp.UserCtrl', []).controller('UserController', function($rootScope, $location, $scope, $http) {
+
+$scope.userBoards = function(user){
+   $rootScope.loggedUser = user;
+   $location.path('/boardAdminPage');
+}
 
 
 var refresh = function() {
-  $http.get('/users').success(function(response) {
+  $http.get('/users/list').success(function(response) {
     console.log("I got the data I requested");
     $scope.userlist = response;
     $scope.user = "";
