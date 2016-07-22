@@ -1,4 +1,4 @@
-angular.module('sampleApp.PostCtrl', []).controller('PostController', function($rootScope, $scope, $http) {
+angular.module('sampleApp.PostCtrl', []).controller('PostController', function($window, $scope, $http, $rootScope) {
 
 
 var refresh = function() {
@@ -29,7 +29,7 @@ $scope.remove = function(id) {
 $scope.edit = function(id) {
   console.log(id);
   $http.get('/posts/' + id).success(function(response) {
-    $scope.user = response;
+    $scope.post = response;
   });
 };  
 

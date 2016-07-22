@@ -36,7 +36,8 @@ angular.module('sampleApp.HomeCtrl', []).controller('HomeController', function($
 		    	$scope.errorMessage="";
       			$scope.hasError=false;
       			$rootScope.isLoggedIn=false;
-		    	$location.path('/home');			  
+      			$rootScope.isAdmin=false;
+      			$location.path('/home');			  
 	};
 
 	$scope.publicBoardPage = function(){
@@ -48,5 +49,13 @@ angular.module('sampleApp.HomeCtrl', []).controller('HomeController', function($
 		$scope.hasError=false;
 		$scope.errorMessage="";
 	};
+
+	$scope.isLoggedInFun = function(){
+		return $rootScope.isLoggedIn;
+	}
+
+	$scope.isAdminFun = function(){
+		return $window.sessionStorage.isAdmin;
+	}
 
 });
