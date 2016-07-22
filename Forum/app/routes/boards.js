@@ -38,7 +38,7 @@ router.get('/:boardId', function(req, res, next) {
 router.post('/:userId', function(req, res, next) {
   if(req.body.isPublic==undefined) req.body.isPublic = false;
   var userId = req.params.userId;
-  UserModel.findOne(userId, function (err, user) {
+  UserModel.findById(userId, function (err, user) {
   	if (err) return next(err);
     if(user==undefined || user==null) {
     	res.json({"error":"could not find user"});
@@ -46,12 +46,12 @@ router.post('/:userId', function(req, res, next) {
       var board = new BoardModel({
           title: req.body.title,
           isPublic: req.body.isPublic,
-          allowedPosts: 100
+          allowedPosts: 100,
+          user : user
       });
     	user.boards.push(board);
     	user.save(function(err, doc) {
 		  	if (err) return next(err);
-		    board.user = user;
 	    	board.save(function(err, doc) {
 			  	if (err) return next(err);
 			    res.json(doc);

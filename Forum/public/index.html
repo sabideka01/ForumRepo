@@ -30,8 +30,8 @@
     <!-- HEADER -->
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
-            <a ng-show="isLoggedIn && !isAdmin" class="navbar-brand">Welcome {{loggedUser.name}}</a>
-            <a ng-show="isLoggedIn && isAdmin" class="navbar-brand">Welcome Admin</a>
+             <a ng-show="isLoggedIn && !isAdmin" class="navbar-brand" href="/boardUserPage">Welcome {{loggedUser.name}}</a>
+             <a ng-show="isLoggedIn && isAdmin" class="navbar-brand" href="/userPage">Welcome Admin</a>
         </div>
         <ul class="nav navbar-nav">
             <li><a ng-show="isLoggedIn && !isAdmin" href="/boardUserPage">Manage your Boards</a></li>
