@@ -8,4 +8,5 @@ angular.module('sampleApp', ['ngRoute',
     $rootScope.loggedUser = undefined;
     $rootScope.isLoggedIn = false;
     $rootScope.selectedBoard = undefined;
+    $rootScope.isAdmin = undefined;
 });

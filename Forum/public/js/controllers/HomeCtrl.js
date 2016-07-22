@@ -13,6 +13,7 @@ angular.module('sampleApp.HomeCtrl', []).controller('HomeController', function($
 		$scope.errorMessage="";
 		$location.path('/userPage');
 		$rootScope.isLoggedIn=true;	
+		$rootScope.isAdmin=true;	
       }else{
       	$scope.hasError=false;
       	$scope.errorMessage="";
