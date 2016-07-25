@@ -1,10 +1,9 @@
-angular.module('sampleApp.UserCtrl', []).controller('UserController', function($rootScope, $location, $scope, $http) {
+angular.module('sampleApp.UserCtrl', []).controller('UserController', function($cookieStore, $location, $scope, $http) {
 
 $scope.userBoards = function(user){
-   $rootScope.loggedUser = user;
+   $cookieStore.put('selectedUserId', user._id);
    $location.path('/boardAdminPage');
 }
-
 
 var refresh = function() {
   $http.get('/users/list').success(function(response) {

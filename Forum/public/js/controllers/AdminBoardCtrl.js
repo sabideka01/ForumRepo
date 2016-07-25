@@ -1,12 +1,12 @@
-angular.module('sampleApp.BoardCtrl', []).controller('BoardController', function($location, $scope, $http, $cookieStore) {
+angular.module('sampleApp.AdminBoardCtrl', []).controller('AdminBoardController', function($location, $scope, $http, $cookieStore) {
 
 $scope.boardPosts = function(detail){
-	$cookieStore.put('selectedBoardId', detail._id);
+  $cookieStore.put('selectedBoardId', detail._id);
   $location.path('/postPage');
 }
 	
 var refresh = function() {
-  $http.get('/boards').success(function(response) {
+  $http.get('/boards/'+ $cookieStore.get('selectedUserId')).success(function(response) {
     console.log("I got the data I requested");
     $scope.boardlist = response;
     $scope.board = "";

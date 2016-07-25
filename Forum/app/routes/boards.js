@@ -5,16 +5,32 @@ var mongoose = require('mongoose');
 var BoardModel = require('../models/BoardModel.js');
 var UserModel = require('../models/UserModel.js');
 
-router.get('/list/:userId', function(req, res, next) {
-  var userId = req.params.userId;
+// Belongs to logged user
+router.get('/', function(req, res, next) {
+  var userId = "";
+  if(req.user){
+	  userId = req.user._id;
+  }else{
+ 	 res.statusCode = 403;
+ 	 res.send({message: "user not logged in"});
+  }
   BoardModel.find({'user':userId},function (err, boards) {
-    console.log('getting boards-'+boards);
     if (err) return next(err);
     res.json(boards);
   });
 });
 
-router.get('/list', function(req, res, next) {
+//Belongs to logged user
+router.get('/:userId', function(req, res, next) {
+  var userId = req.params.userId;
+  BoardModel.find({'user':userId},function (err, boards) {
+    if (err) return next(err);
+    res.json(boards);
+  });
+});
+
+// public boards belongs to other user
+router.get('/public/list', function(req, res, next) {
   BoardModel.find({'isPublic':true},function (err, boards) {
     console.log('getting boards-'+boards);
     if (err) return next(err);
@@ -35,9 +51,15 @@ router.get('/:boardId', function(req, res, next) {
   });
 });
 
-router.post('/:userId', function(req, res, next) {
+router.post('/', function(req, res, next) {
   if(req.body.isPublic==undefined) req.body.isPublic = false;
-  var userId = req.params.userId;
+  var userId = "";
+  if(req.user){
+	  userId = req.user._id;
+  }else{
+ 	 res.statusCode = 403;
+ 	 res.send({message: "user not logged in"});
+  }
   UserModel.findById(userId, function (err, user) {
   	if (err) return next(err);
     if(user==undefined || user==null) {

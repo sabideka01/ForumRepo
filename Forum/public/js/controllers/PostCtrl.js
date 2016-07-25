@@ -1,8 +1,8 @@
-angular.module('sampleApp.PostCtrl', []).controller('PostController', function($window, $scope, $http, $rootScope) {
+angular.module('sampleApp.PostCtrl', []).controller('PostController', function($cookieStore, $scope, $http) {
 
 
 var refresh = function() {
-  $http.get('/posts/list/'+$rootScope.selectedBoard._id).success(function(response) {
+  $http.get('/posts/list/'+$cookieStore.get('selectedBoardId')).success(function(response) {
     console.log("I got the data I requested");
     $scope.postList = response;
     $scope.post = "";
@@ -13,7 +13,7 @@ refresh();
 
 $scope.addPost = function() {
   console.log($scope.post);
-  $http.post('/posts/'+ $rootScope.selectedBoard._id, $scope.post).success(function(response) {
+  $http.post('/posts/'+ $cookieStore.get('selectedBoardId'), $scope.post).success(function(response) {
     console.log(response);
     refresh();
   });

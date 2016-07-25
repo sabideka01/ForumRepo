@@ -1,12 +1,9 @@
-angular.module('sampleApp', ['ngRoute',
+angular.module('sampleApp', ['ngRoute','ngCookies',
  'sampleApp.appRoutes', 
  'sampleApp.HomeCtrl', 
  'sampleApp.UserCtrl', 
  'sampleApp.BoardCtrl', 
  'sampleApp.PostCtrl',
- 'sampleApp.PublicBoardCtrl']).run(function($rootScope) {
-    $rootScope.loggedUser = undefined;
-	$rootScope.isLoggedIn = false;
-    $rootScope.selectedBoard = undefined;
-    $rootScope.isAdmin = undefined;
+ 'sampleApp.PublicBoardCtrl',
+ 'sampleApp.AdminBoardCtrl']).run(function() {
 });

@@ -15,7 +15,7 @@ angular.module('sampleApp.appRoutes', []).config(['$routeProvider', '$locationPr
 
         .when('/boardAdminPage', {
             templateUrl: 'views/boardAdmin.html',
-            controller: 'BoardController'
+            controller: 'AdminBoardController'
         })
 
         .when('/boardUserPage', {
@@ -40,6 +40,6 @@ angular.module('sampleApp.appRoutes', []).config(['$routeProvider', '$locationPr
 
 
 
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(false);
 
 }]);

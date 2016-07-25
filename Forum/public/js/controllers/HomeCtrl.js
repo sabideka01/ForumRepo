@@ -1,4 +1,4 @@
-angular.module('sampleApp.HomeCtrl', []).controller('HomeController', function($location, $scope, $http, $rootScope) {
+angular.module('sampleApp.HomeCtrl', []).controller('HomeController', function($location, $scope, $http, $cookieStore) {
 
 	$scope.hasError=false;
 	$scope.errorMessage="";
@@ -12,50 +12,51 @@ angular.module('sampleApp.HomeCtrl', []).controller('HomeController', function($
 		$scope.hasError=false;
 		$scope.errorMessage="";
 		$location.path('/userPage');
-		$rootScope.isLoggedIn=true;	
-		$rootScope.isAdmin=true;	
+		$cookieStore.put('isLoggedIn', true);
+		$cookieStore.put('isAdmin', true);
       }else{
       	$scope.hasError=false;
       	$scope.errorMessage="";
-      	$http.post('/login', $scope.loginDetail).success(function(response) {
-	    	console.log(response);
-	    	$rootScope.loggedUser = response;
-	    	$rootScope.isLoggedIn=true;
-	    	$location.path('/boardUserPage');
+      	$http.post('/auth/login', $scope.loginDetail).success(function(response) {
+		    	console.log(response);
+		    	$cookieStore.put('isLoggedIn', true);
+		    	$cookieStore.put('loggedUserName', response.name);
+		    	$scope.loggedUserName = response.name;
+		    	$location.path('/boardUserPage');
 		  }).error(function (data, status, header, config) {
 	            console.log(response);
-	            $scope.errorMessage="invalid credential";
+	            $scope.errorMessage=response.message;
       			$scope.hasError=true;
-
 	      });
       }
 	};
 
 	$scope.logoutUser = function() {		  
-		    	$rootScope.loggedUser = undefined;
-		    	$scope.errorMessage="";
-      			$scope.hasError=false;
-      			$rootScope.isLoggedIn=false;
-      			$rootScope.isAdmin=false;
-      			$location.path('/home');			  
+  			$http.post('/auth/logout').success(function(response) {
+			    	$scope.errorMessage="";
+		  			$scope.hasError=false;
+		  			$cookieStore.put('isLoggedIn', false);
+		  			$cookieStore.put('isAdmin', false);
+		  			$cookieStore.put('loggedUserName', undefined);
+		  			$location.path('/');
+			}).error(function (data, status, header, config) {
+		            alert("Logout failed");
+			});			  
 	};
-
-	$scope.publicBoardPage = function(){
-		$location.path('/publicBoardPage');
-	}
-
 
 	$scope.clearMsg = function() {
 		$scope.hasError=false;
 		$scope.errorMessage="";
 	};
-
-	$scope.isLoggedInFun = function(){
-		return $rootScope.isLoggedIn;
-	}
-
-	$scope.isAdminFun = function(){
-		return $window.sessionStorage.isAdmin;
-	}
+	
+	$scope.isLoggedInFun = function() {
+		$scope.loggedUserName = $cookieStore.get('loggedUserName');
+		return $cookieStore.get('isLoggedIn');
+	};
+	
+	$scope.isAdminFun = function() {
+		return $cookieStore.get('isAdmin');
+	};
+	
 
 });
