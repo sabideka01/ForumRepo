@@ -51,6 +51,32 @@ router.get('/:boardId', function(req, res, next) {
   });
 });
 
+router.post('/:userId', function(req, res, next) {
+  if(req.body.isPublic==undefined) req.body.isPublic = false;
+  var userId = req.params.userId;
+  UserModel.findById(userId, function (err, user) {
+    if (err) return next(err);
+    if(user==undefined || user==null) {
+      res.json({"error":"could not find user"});
+    }else{
+      var board = new BoardModel({
+          title: req.body.title,
+          isPublic: req.body.isPublic,
+          allowedPosts: 100,
+          user : user
+      });
+      user.boards.push(board);
+      user.save(function(err, doc) {
+        if (err) return next(err);
+        board.save(function(err, doc) {
+          if (err) return next(err);
+          res.json(doc);
+        });
+      });
+    }   
+  });  
+});
+
 router.post('/', function(req, res, next) {
   if(req.body.isPublic==undefined) req.body.isPublic = false;
   var userId = "";
