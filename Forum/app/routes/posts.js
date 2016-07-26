@@ -46,17 +46,17 @@ router.post('/:boardId', function(req, res, next) {
           res.json(400, {
                   message: "Can not add more posts than admin defined limit"
           });
+      }else{
+        board.save(function(err, savedBoard) {
+        if (err) return next(err);
+        post.board = savedBoard;
+        post.save(function(err, savedPost) {
+          if (err) return next(err);
+            res.statusCode = 200;
+            res.send();
+        });
+      });
       }
-      
-    	board.save(function(err, savedBoard) {
-		  	if (err) return next(err);
-		    post.board = savedBoard;
-	    	post.save(function(err, savedPost) {
-			  	if (err) return next(err);
-			    res.statusCode = 200;
-    			res.send();
-  			});
-  		});
     }   
   });  
 });
