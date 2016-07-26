@@ -16,7 +16,10 @@ $scope.addPost = function() {
   $http.post('/posts/'+ $cookieStore.get('selectedBoardId'), $scope.post).success(function(response) {
     console.log(response);
     refresh();
-  });
+  }).error(function (data, status, header, config) {
+          alert(data.message);
+          $scope.post=undefined;
+   });
 };
 
 $scope.remove = function(id) {

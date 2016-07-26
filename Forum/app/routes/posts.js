@@ -19,7 +19,9 @@ router.get('/:postId', function(req, res, next) {
   PostModel.findById(postId, function (err, board) {
     if (err) return next(err);
       if(board==undefined || board==null) {
-    	res.json("Could not find post");
+    	res.json(400, {
+                message: "Could not find post"
+      });
       }else{
       	res.json(board);
       }
@@ -31,13 +33,21 @@ router.post('/:boardId', function(req, res, next) {
   BoardModel.findById(boardId, function (err, board) {
   	if (err) return next(err);
     if(board==undefined || board==null) {
-    	res.json({"error":"could not find board"});
+    	res.json(400, {
+                message: "Could not find board"
+      });
     }else{
     	var post = new PostModel({
 		  	content: req.body.content,
   			board: boardId,
 		  });
     	board.posts.push(post);
+      if(board.posts.length>board.allowedPosts){
+          res.json(400, {
+                  message: "Can not add more posts than admin defined limit"
+          });
+      }
+      
     	board.save(function(err, savedBoard) {
 		  	if (err) return next(err);
 		    post.board = savedBoard;

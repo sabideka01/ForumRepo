@@ -53,6 +53,7 @@ router.get('/:boardId', function(req, res, next) {
 
 router.post('/:userId', function(req, res, next) {
   if(req.body.isPublic==undefined) req.body.isPublic = false;
+  if(req.body.allowedPosts==undefined || isNaN(req.body.allowedPosts) ) req.body.allowedPosts = 100;
   var userId = req.params.userId;
   UserModel.findById(userId, function (err, user) {
     if (err) return next(err);
@@ -62,7 +63,7 @@ router.post('/:userId', function(req, res, next) {
       var board = new BoardModel({
           title: req.body.title,
           isPublic: req.body.isPublic,
-          allowedPosts: 100,
+          allowedPosts: req.body.allowedPosts,
           user : user
       });
       user.boards.push(board);
@@ -79,6 +80,7 @@ router.post('/:userId', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   if(req.body.isPublic==undefined) req.body.isPublic = false;
+  if(req.body.allowedPosts==undefined || isNaN(req.body.allowedPosts) ) req.body.allowedPosts = 100;
   var userId = "";
   if(req.user){
 	  userId = req.user._id;
@@ -94,7 +96,7 @@ router.post('/', function(req, res, next) {
       var board = new BoardModel({
           title: req.body.title,
           isPublic: req.body.isPublic,
-          allowedPosts: 100,
+          allowedPosts: req.body.allowedPosts,
           user : user
       });
     	user.boards.push(board);
@@ -111,12 +113,14 @@ router.post('/', function(req, res, next) {
 
 router.put('/:boardId', function (req, res, next) {
   if(req.body.isPublic==undefined) req.body.isPublic = false;
+  if(req.body.allowedPosts==undefined || isNaN(req.body.allowedPosts) ) req.body.allowedPosts = 100;
   var boardId = req.params.boardId;
+
   BoardModel.findByIdAndUpdate(boardId, 
   	{ 
   		title: req.body.title,
   		isPublic: req.body.isPublic,
-  		allowedPosts: 100
+  		allowedPosts: req.body.allowedPosts
 	 }, 
   	function(err, updatedBoard){
   		if (err) return next(err);
