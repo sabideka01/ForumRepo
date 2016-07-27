@@ -16,7 +16,8 @@ var refresh = function() {
 refresh();
 
 $scope.addUser = function() {
-  console.log($scope.user);
+  //console.log($scope.user);
+  if($scope.user == "") return;
   $http.post('/users', $scope.user).success(function(response) {
     console.log(response);
     refresh();
