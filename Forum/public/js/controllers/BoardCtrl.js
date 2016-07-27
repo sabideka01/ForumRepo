@@ -16,7 +16,8 @@ var refresh = function() {
 refresh();
 
 $scope.addBoard = function() {
-  console.log($scope.board);
+  //console.log($scope.board);
+  if($scope.board == "") return;
   if($scope.board.isPublic==undefined) $scope.board.isPublic = false;
   $http.post('/boards', $scope.board).success(function(response) {
     console.log(response);
